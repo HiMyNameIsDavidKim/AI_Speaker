@@ -5,7 +5,7 @@
 
 from gtts import gTTS
 from playsound import playsound
-file_name = './save/sample.mp3'
+file_name = 'save/sample.mp3'
 
 # 영어
 text = 'Can I help you?'
@@ -20,7 +20,7 @@ tts_ko.save(file_name)
 playsound(file_name)
 
 # 파일 읽기
-with open('./data/sample.txt', 'r', encoding='utf8') as f:
+with open('data/sample.txt', 'r', encoding='utf8') as f:
     text = f.read()
 tts_ko = gTTS(text=text, lang='ko')
 tts_ko.save(file_name)

@@ -17,10 +17,10 @@ with sr.Microphone() as source:
     listen = r.listen(source)
 
 # 파일로 음성 인식
-w = AudioSegment.from_mp3('./save/sample.mp3')
+w = AudioSegment.from_mp3('save/sample.mp3')
 w.export('./save/sample.wav', format='wav')
 r = sr.Recognizer()
-with sr.AudioFile('./save/sample.wav') as source:
+with sr.AudioFile('save/sample.wav') as source:
     record = r.record(source)
 
 try:
