@@ -1,10 +1,10 @@
-import time, os
+import time, os, sys
 import speech_recognition as sr
 from gtts import gTTS
 from playsound import playsound
 
 
-class DAIVIS(object):
+class DAVIS(object):
     def __init__(self):
         global fname_init, fname_ans, path_stock
         fname_init = './save/init.mp3'
@@ -30,13 +30,18 @@ class DAIVIS(object):
             print(f'RequestError: {e}')
 
     def answer(self, text):
-        if 'daivis' == text:
-            answer_text = 'yes Master.'
+        text = text.lower()
+        if 'hi' in text:
+            answer_text = 'Hi Master.'
+        elif 'davis' == text:
+            answer_text = 'Yes Master.'
         elif 'thank' in text:
             answer_text = 'My pleasure.'
-        elif 'shutdown' in text:
+        elif 'shut down' in text:
             answer_text = 'See you Master.'
-            self.shutdown(wait_for_stop=False)
+            self.speak(answer_text, fname_ans)
+            self.shutdown = True
+            sys.exit()
         elif 'stock' in text:
             answer_text = self.stock_report()
         elif 'weather' in text:
@@ -46,23 +51,23 @@ class DAIVIS(object):
         self.speak(answer_text, fname_ans)
 
     def speak(self, text, fname):
-        print('[DAIVIS]: ' + text)
+        print('[DAVIS]: ' + text)
         tts = gTTS(text=text, lang='en')
         tts.save(fname)
         playsound(fname)
 
     def stock_report(self):
-        asnwer = f''
+        answer = f''
         if os.path.isfile(path_stock):
-          asnwer = f''
+          answer = f''
         else:
             # report analyze file run
-            asnwer = f'' + f'' + f''
-        return asnwer
+            answer = f'' + f'' + f''
+        return answer
 
 
 if __name__ == '__main__':
-    daivis = DAIVIS()
-    daivis.process()
-    while True:
+    davis = DAVIS()
+    davis.process()
+    while davis.shutdown is not True:
         time.sleep(0.1)
